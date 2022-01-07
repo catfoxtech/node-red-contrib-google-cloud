@@ -37,6 +37,7 @@ limitations under the License.
     <div class="form-row">
         <label for="node-input-subscription"><i class="fa fa-bars"></i> Subscription</label>
         <input type="text" id="node-input-subscription">
+        <input type="hidden" id="node-input-subscriptionType">
     </div>
 
     <!-- Assume JSON-->
@@ -80,6 +81,7 @@ RED.nodes.registerType("google-cloud-pubsub in", {
         account: { type: "google-cloud-credentials", required: false },
         keyFilename: { value: "", required: false },
         subscription: { required: true },
+        subscriptionType: { value: "str", required: true },
         assumeJSON: { value: false, required: false },
         name: { value: "", required: false }
     },
@@ -91,6 +93,14 @@ RED.nodes.registerType("google-cloud-pubsub in", {
     label: function () {
         return this.name || this.topic || "pubsub";
     },
-    paletteLabel: "pubsub"
+    paletteLabel: "pubsub",
+    oneditprepare: function () {
+        $("#node-input-subscription").typedInput({
+            default: "str",
+            type: "str",
+            types: ["str", "env"],
+            typeField: "#node-input-subscriptionType"
+        });
+    }
 });
 </script>

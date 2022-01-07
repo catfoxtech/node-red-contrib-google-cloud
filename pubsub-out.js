@@ -64,7 +64,8 @@ module.exports = function(RED) {
         }
         const keyFilename = config.keyFilename;
 
-        if (!config.topic) {
+        const topicName = RED.util.evaluateNodeProperty(config.topic, config.topicType);
+        if (!topicName) {
             node.error('No topic supplied!');
             return;
         }
@@ -112,7 +113,7 @@ module.exports = function(RED) {
         node.status(STATUS_CONNECTING);
 
         topicReady = new Promise((resolve, reject) => {
-            pubsub.topic(config.topic).get().then((data) => {
+            pubsub.topic(topicName).get().then((data) => {
                 topic = data[0];
                 node.status(STATUS_CONNECTED);
                 resolve();

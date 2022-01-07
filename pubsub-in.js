@@ -58,12 +58,13 @@ module.exports = function(RED) {
 
         let options = {};
 
-        if (!config.subscription) {
+        const subscriptionName = RED.util.evaluateNodeProperty(config.subscription, config.subscriptionType);
+        if (!config.subscriptionName) {
             node.error('Subscription is required');
             return;
         }
 
-        options.subscription = config.subscription;
+        options.subscription = subscriptionName;
         options.assumeJSON = config.assumeJSON; // Assume JSON input
 
         node.status(STATUS_DISCONNECTED);
