@@ -82,7 +82,7 @@ module.exports = function(RED) {
                     'attributes': message.attributes,
                     'id': message.id,
                     'orderingKey': message.orderingKey,
-                    'publishedTime': message.publishedTime,
+                    'publishTime': message.publishTime, //modified publishedTime to publishTime
                     'received': message.received
                 }
             };
@@ -108,7 +108,7 @@ module.exports = function(RED) {
             if (subscription) {
                 subscription.close();  // No longer receive messages.
                 subscription.removeListener('message', OnMessage);
-                subscription.removeListener('error', OnError);
+                subscription.removeListener('error', OnClose);
                 subscription = null;
             }
             pubsub = null;
